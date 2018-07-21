@@ -51,6 +51,7 @@ nav {
   height: 64px;
   position: fixed;
   width: 100%;
+  z-index: 777;
 }
 
 a {
