@@ -3,7 +3,7 @@
     <div
       v-for="(day, index) in journey"
       :key="index"
-      v-if="active==index">
+      v-if="day.slug==$route.params.day">
 
       <div
         class="background-image"
@@ -12,39 +12,40 @@
         }">
       </div>
 
-        <main>
+      <main>
 
-          <h1>{{day.title}}</h1>
+        <h1>{{day.title}}</h1>
 
-          <div class="card">
+        <div class="card">
 
-            <span class="date">
-              {{ day.day.seconds | moment("DD.MM.YYYY") }}
-            </span>
-            <span class="secondary-text">
-              {{ day.places }}
-            </span>
-            <span class="secondary-text">
-              {{ day.coordinates }}
-            </span>
+          <span class="date">
+            {{ day.day.seconds | moment("DD.MM.YYYY") }}
+          </span>
+          <span class="secondary-text">
+            {{ day.places }}
+          </span>
+          <span class="secondary-text">
+            {{ day.coordinates }}
+          </span>
 
-            <vue-markdown class="body-text">{{day.text}}</vue-markdown>
+          <vue-markdown class="body-text">{{day.text}}</vue-markdown>
 
-            <gallery
-              :images="day.gallery"
-              :index="galleryIndex"
-              @close="galleryIndex = null"></gallery>
+          <gallery
+            :images="day.gallery"
+            :index="galleryIndex"
+            @close="galleryIndex = null"></gallery>
 
-            <img
-              v-for="(image, imageIndex) in day.gallery"
-              :key="imageIndex"
-              :src="image"
-              @click="galleryIndex = imageIndex" />
+          <img
+            v-for="(image, imageIndex) in day.gallery"
+            :key="imageIndex"
+            :src="image"
+            @click="galleryIndex = imageIndex" />
 
-          </div>
-          
-        </main>
-
+        </div>
+      </main>
+      <page-control
+        :current="Number(day.index)"
+        :journey="journey"></page-control>
     </div>
   </div>
 </template>
@@ -53,6 +54,7 @@
 import {db} from '@/firebase.js'
 import VueMarkdown from 'vue-markdown'
 import Gallery from 'vue-gallery'
+import PageControl from '@/components/PageControl.vue'
 
 export default {
   name: 'day',
@@ -60,7 +62,6 @@ export default {
     return {
       greeting: 'Day',
       journey: [],
-      active: Number(this.$route.params.day.charAt(4)-1),
       galleryIndex: null
     }
   },
@@ -68,12 +69,13 @@ export default {
   },
   firestore () {
     return {
-      journey: db.collection('journey').orderBy('index')
+      journey: db.collection('journey').orderBy('day')
     }
   },
   components: {
     VueMarkdown,
-    'gallery': Gallery
+    'gallery': Gallery,
+    'page-control': PageControl
   }
 }
 </script>
@@ -82,8 +84,9 @@ export default {
 @import '../scss/variables';
 
 .background-image {
+  background-position: center;
   background-size: cover;
-  padding-top: 56.25%;
+  padding-top: 100%;
   width: 100%;
 }
 
@@ -106,6 +109,7 @@ h1 {
   box-sizing: border-box;
   font-family: 'Merriweather', serif;
   padding: 16px;
+  margin-bottom: 10px;
 }
 
 .date {
