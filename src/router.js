@@ -4,10 +4,12 @@ import Home from './views/Home.vue'
 import Journey from './views/Journey.vue'
 import Downloads from './views/Downloads.vue'
 import Login from './views/Login.vue'
+import Day from './views/Day.vue'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -18,6 +20,11 @@ export default new Router({
       path: '/journey',
       name: 'journey',
       component: Journey
+    },
+    {
+      path: '/journey/:day',
+      name: 'day',
+      component: Day
     },
     {
       path: '/downloads',
