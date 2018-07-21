@@ -1,18 +1,33 @@
 <template>
-  <div class="home">
-    <img src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Welcome to the {{ greeting }}-Page!</h1>
+    <div v-for="(day, index) in journey" :key="index">
+      <img :src="day.cover" alt="">
+      <h2>{{day.title}}</h2>
+      <vue-markdown>{{day.text}}</vue-markdown>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import {db} from '@/firebase.js'
+import VueMarkdown from 'vue-markdown'
 
 export default {
   name: 'home',
+  data () {
+    return {
+      greeting: 'Home',
+      journey: []
+    }
+  },
+  firestore () {
+    return {
+      journey: db.collection('journey').orderBy('day')
+    }
+  },
   components: {
-    HelloWorld
+    VueMarkdown
   }
 }
 </script>
