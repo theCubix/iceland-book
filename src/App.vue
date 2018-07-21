@@ -1,14 +1,21 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/journey">Journey</router-link>
-      <router-link to="/downloads">Downloads</router-link>
-      <router-link to="/login">Login</router-link>
-    </div>
-    <router-view/>
+    <component :is="layout">
+      <router-view/>
+    </component>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    layout () {
+      return (this.$route.meta.layout + '-layout')
+    }
+  }
+}
+</script>
+
 
 <style lang="scss">
 
