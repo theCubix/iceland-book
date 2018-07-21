@@ -99,6 +99,7 @@ h1 {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
   margin: 0 16px 0.5em 16px;
+  font-size: 1.75em;
 }
 
 .card {
