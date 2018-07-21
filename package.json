@@ -11,7 +11,9 @@
     "firebase": "^5.3.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
+    "vue-gallery": "^1.4.0",
     "vue-markdown": "^2.2.4",
+    "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
     "vuefire": "^2.0.0-alpha.12"
   },
@@ -23,6 +25,7 @@
     "@vue/eslint-config-standard": "^3.0.0-rc.5",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
+    "vue-svg-loader": "^0.5.0",
     "vue-template-compiler": "^2.5.16"
   },
   "eslintConfig": {
