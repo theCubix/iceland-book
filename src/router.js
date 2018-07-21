@@ -14,26 +14,41 @@ export default new Router({
     {
       path: '/',
       name: 'home',
+      meta: {
+        layout: 'logged-in'
+      },
       component: Home
     },
     {
       path: '/journey',
       name: 'journey',
+      meta: {
+        layout: 'logged-in'
+      },
       component: Journey
     },
     {
       path: '/journey/:day',
       name: 'day',
+      meta: {
+        layout: 'logged-in'
+      },
       component: Day
     },
     {
       path: '/downloads',
       name: 'downloads',
+      meta: {
+        layout: 'logged-in'
+      },
       component: Downloads
     },
     {
       path: '/login',
       name: 'login',
+      meta: {
+        layout: 'not-logged-in'
+      },
       component: Login
     }
   ]
