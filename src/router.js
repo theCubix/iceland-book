@@ -30,7 +30,7 @@ export default new Router({
       component: Journey
     },
     {
-      path: '/journey/:day',
+      path: '/journey/day/:day',
       name: 'day',
       meta: {
         layout: 'logged-in'
