@@ -2,29 +2,34 @@
   <div>
     <h1>Welcome to the {{ greeting }}-Page!</h1>
     <router-link
-      v-for="(day, index) in journey"
+      v-for="(day, index) in days"
       :key="index"
-      :to="'/journey/'+day.slug">
-        {{day.title}}<br/>
+      :to="`/journey/day/${day.tripIndex}`">
+      {{ day.title }}
     </router-link>
   </div>
 </template>
 
 <script>
-import {db} from '@/firebase.js'
+import app from '@/firebase.js'
 
 export default {
   name: 'journey',
   data () {
     return {
       greeting: 'Journey',
-      journey: []
+      days: []
     }
   },
-  firestore () {
-    return {
-      journey: db.collection('journey').orderBy('day')
+  methods: {
+    getDays() {
+      app.content.get('days', { fields: [ 'title', 'tripIndex' ]})
+        .then(days => this.days = days)
+        .catch(error => console.log(error))
     }
+  },
+  created () {
+    this.getDays()
   }
 }
 </script>
