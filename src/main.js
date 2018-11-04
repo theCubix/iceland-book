@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueFire from 'vuefire'
+// import VueFire from 'vuefire'
 import VueMoment from 'vue-moment'
 import router from './router'
 import './registerServiceWorker'
@@ -13,7 +13,7 @@ Vue.component('not-logged-in-layout', NotLoggedIn)
 
 Vue.config.productionTip = false
 
-Vue.use(VueFire)
+// Vue.use(VueFire)
 Vue.use(VueMoment)
 
 new Vue({
