@@ -121,7 +121,7 @@ export default {
     this.fetchNext()
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       this.fetchPrevious()
       this.fetchNext()
     }

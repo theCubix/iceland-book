@@ -93,7 +93,7 @@ export default {
     'responsive-image': Image
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       this.getBody()
     }
   }

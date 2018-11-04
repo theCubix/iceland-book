@@ -26,16 +26,16 @@ export default {
     }
   },
   methods: {
-    getDownloadUrl(src) {
+    getDownloadUrl (src) {
       var i
       for (i = 0; i < src.sizes.length; i++) {
-       firebase.storage().ref(`flamelink/media/sized/${src.sizes[i].path}/${src.file}`).getDownloadURL()
+      firebase.storage().ref(`flamelink/media/sized/${src.sizes[i].path}/${src.file}`).getDownloadURL()
           .then(url => this.sizes.push(url))
           .catch(err => console.log(err))
       }
     }
   },
-  created() {
+  created () {
     this.getDownloadUrl(this.img)
   }
 }
@@ -72,4 +72,3 @@ picture {
   top: 0;
 }
 </style>
-

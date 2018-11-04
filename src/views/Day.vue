@@ -58,7 +58,7 @@ export default {
     this.setActive()
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       this.setActive()
       this.setPrevious()
       this.setNext()

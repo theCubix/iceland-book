@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import app from '@/firebase.js'
 import VueMarkdown from 'vue-markdown'
 
 export default {
