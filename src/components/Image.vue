@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <picture v-if="sizes != null">
+  <div :class="`${contentAware ? 'wrapper' : ''}`">
+    <picture v-if="sizes != null" :class="`${contentAware ? 'child' : ''}`">
       <source
         v-for="(size, index) in sizes"
         :key="index"
@@ -16,7 +16,8 @@ import { firebaseApp as firebase } from '@/firebase.js'
 
 export default {
   props: {
-    src: Object
+    src: Object,
+    contentAware: Boolean
   },
   data () {
     return {
@@ -46,22 +47,29 @@ export default {
 div {
   background-color: $blue-primary;
   width: 100%;
-  padding-top: 56.25%;
   position: relative;
 }
 
+.wrapper {
+  padding-top: 56.25%;
+}
+
 picture {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+
   width: 100%;
 
   & > img {
     display: block;
     width: 100%;
   }
+}
+
+.child {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>
 
