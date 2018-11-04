@@ -4,8 +4,8 @@
     <router-link
       v-for="(day, index) in days"
       :key="index"
-      :to="`/journey/day/${day.tripIndex}`">
-      {{ day.title }}
+      :to="`/day/${day.tripIndex}`">
+      {{ day.title }}<br>
     </router-link>
   </div>
 </template>
@@ -14,17 +14,17 @@
 import app from '@/firebase.js'
 
 export default {
-  name: 'journey',
+  name: 'Trip',
   data () {
     return {
-      greeting: 'Journey',
+      greeting: 'Journeys',
       days: []
     }
   },
   methods: {
-    getDays() {
-      app.content.get('days', { fields: [ 'title', 'tripIndex' ]})
-        .then(days => this.days = days)
+    getDays () {
+      app.content.get('days', {fields: ['title', 'tripIndex']})
+        .then(days => (this.days = days))
         .catch(error => console.log(error))
     }
   },

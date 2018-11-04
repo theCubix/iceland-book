@@ -7,13 +7,13 @@
           <span>Home</span>
         </div>
       </router-link>
-      <router-link to="/journey">
+      <router-link to="/trip/">
         <div>
           <journal-icon class="icon" />
           <span>Journey</span>
         </div>
       </router-link>
-      <router-link to="/downloads">
+      <router-link to="/downloads/">
         <div>
           <download-icon class="icon" />
           <span>Downloads</span>
@@ -93,4 +93,3 @@ svg.icon {
   transition-property: fill, margin-bottom;
 }
 </style>
-

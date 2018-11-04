@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Journey from './views/Journey.vue'
+import Trip from './views/Trip.vue'
+import Day from './views/Day.vue'
 import Downloads from './views/Downloads.vue'
 import Login from './views/Login.vue'
-import Day from './views/Day.vue'
 
 Vue.use(Router)
 
@@ -22,15 +22,15 @@ export default new Router({
       component: Home
     },
     {
-      path: '/journey',
-      name: 'journey',
+      path: '/trip/',
+      name: 'trip',
       meta: {
         layout: 'logged-in'
       },
-      component: Journey
+      component: Trip
     },
     {
-      path: '/journey/day/:day',
+      path: '/day/:day',
       name: 'day',
       meta: {
         layout: 'logged-in'
@@ -38,7 +38,7 @@ export default new Router({
       component: Day
     },
     {
-      path: '/downloads',
+      path: '/downloads/',
       name: 'downloads',
       meta: {
         layout: 'logged-in'
