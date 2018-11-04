@@ -1,17 +1,20 @@
-import Firebase from 'firebase/app'
-import 'firebase/firestore'
+import * as firebase from 'firebase'
 
-const FirebaseApp = Firebase.initializeApp({
+import flamelink from 'flamelink'
+
+const FirebaseConfig = {
   apiKey: 'AIzaSyCtyAoKcHtDmfzoJ8mvGTQA1-Bg_ClkW30',
   authDomain: 'iceland-book.firebaseapp.com',
   databaseURL: 'https://iceland-book.firebaseio.com',
   projectId: 'iceland-book',
   storageBucket: 'iceland-book.appspot.com',
   messagingSenderId: '831130240467'
-})
+}
 
-const firestore = Firebase.firestore()
-const settings = {timestampsInSnapshots: true}
-firestore.settings(settings)
+const firebaseApp = firebase.initializeApp(FirebaseConfig)
 
-export const db = FirebaseApp.firestore()
+const app = flamelink({ firebaseApp })
+
+export { firebaseApp }
+
+export default app
