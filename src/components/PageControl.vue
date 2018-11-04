@@ -4,7 +4,7 @@
 
     <router-link
       class="trigger"
-      v-if="previous"
+      v-if="previous != null"
       :to="`/day/${previous}`"
       :style="{
         'background-image': `linear-gradient(to bottom right, rgba(50,243,255,0.75), rgba(35,170,178,0.75)), url('${previousImageUrl}')`
@@ -20,7 +20,7 @@
 
     <router-link
       class="trigger"
-      v-if="next"
+      v-if="next != null"
       :to="`/day/${next}`"
       :style="{
           'background-image': `linear-gradient(to bottom right, rgba(255,148,50,0.75), rgba(178,104,35,0.75)), url('${nextImageUrl}')`
@@ -75,8 +75,10 @@ export default {
               field: 'coverImage'
             }]
           })
-          .then(res => (this.previousPage = res[Object.keys(res)[0]]))
-          .then(res => this.setPreviousImageUrl())
+          .then(res => {
+            (this.previousPage = res[Object.keys(res)[0]])
+            this.setPreviousImageUrl()
+          })
           .catch(err => console.log(err))
       } else {
         this.previousPage = {}
@@ -95,8 +97,10 @@ export default {
               field: 'coverImage'
             }]
           })
-          .then(res => (this.nextPage = res[Object.keys(res)[0]]))
-          .then(res => this.setNextImageUrl())
+          .then(res => {
+            (this.nextPage = res[Object.keys(res)[0]])
+            this.setNextImageUrl()
+          })
           .catch(err => console.log(err))
       } else {
         this.nextPage = {}

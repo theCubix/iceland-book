@@ -31,9 +31,11 @@ export default {
     },
     getAll () {
       app.content.get('days', { fields: [ 'id' ] })
-        .then(res => (this.entriesLength = Object.keys(res).length))
-        .then(this.setPrevious())
-        .then(this.setNext())
+        .then(res => {(
+          this.entriesLength = Object.keys(res).length)
+          this.setPrevious()
+          this.setNext()
+        })
         .catch(err => console.log(err))
     },
     setPrevious () {
@@ -54,8 +56,8 @@ export default {
     }
   },
   created () {
-    this.getAll()
     this.setActive()
+    this.getAll()
   },
   watch: {
     $route (to, from) {
