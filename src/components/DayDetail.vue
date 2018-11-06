@@ -22,6 +22,7 @@
           <span class="secondary-text">
             {{ item.coordinates }}
           </span>
+
           <vue-markdown class="body-text">{{ item.bodyCopy }}</vue-markdown>
 
           <gallery
@@ -31,15 +32,19 @@
             @close="galleryIndex = null">
           </gallery>
 
-          <div
-            v-for="(image, imageIndex) in item.gallery"
-            :key="imageIndex"
-            :contentAware="false"
-            class="gallery-image"
-            @click="galleryIndex = imageIndex">
-
-            <responsive-image :src="image"/>
-
+          <h2>Bilder</h2>
+          
+          <div class="masonry">
+            
+            <div
+              v-for="(image, imageIndex) in item.gallery"
+              :key="imageIndex"
+              :contentAware="false"
+              class="gallery-image"
+              @click="galleryIndex = imageIndex">
+                <responsive-image :src="image"/>
+            </div>
+          
           </div>
 
         </div>
@@ -77,6 +82,7 @@ export default {
         .catch(error => console.error('something went wrong while retrieving the current day:', error))
     },
     setGalleryUrls (gallery) {
+      this.galleryUrls = []
       let images = gallery[Object.keys(gallery)[0]].gallery
       let i
       for (i = 0; i < images.length; i++) {
@@ -103,17 +109,14 @@ export default {
 <style lang="scss" scoped>
 @import '../scss/variables';
 
-.background-image {
-  background-position: center;
-  background-size: cover;
-  padding-top: 100%;
-  width: 100%;
-}
-
 main {
-  margin: -80px 10px 0 10px;
+  margin-top: -80px;
   position: relative;
   z-index: 1;
+
+  @include desktop {
+    margin-top: -180px;
+  }
 }
 
 h1 {
@@ -122,6 +125,27 @@ h1 {
   font-weight: 400;
   margin: 0 16px 0.5em 16px;
   font-size: 1.75em;
+  
+  @include desktop {
+    box-sizing: border-box;
+    display: block;
+    font-size: 3em;
+    margin: 0 auto 0.5em auto;
+    padding: 0 100px;
+    width: 980px;
+  }
+}
+
+h2 {
+  color: #197980;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 400;
+  font-size: 1.5em;
+
+  @include desktop {
+    opacity: 0.4;
+    font-size: 2em;
+  }
 }
 
 .card {
@@ -132,7 +156,13 @@ h1 {
   box-sizing: border-box;
   font-family: 'Merriweather', serif;
   padding: 16px;
-  margin-bottom: 10px;
+  margin: 0 10px 20px 10px;
+
+  @include desktop {
+    margin: 0 auto 140px auto;
+    padding: 75px 100px;
+    width: 980px;
+  }
 }
 
 .date {
@@ -152,17 +182,34 @@ h1 {
   line-height: 1.25em;
 }
 
+@supports (column-count: 1) {
+  .masonry {
+    column-count: 2;
+  }
+}
+
 .gallery-image {
   border-radius: 3px;
   display: block;
   margin-bottom: 16px;
   overflow: hidden;
   width: 100%;
+  
+  & > * {
+    transform: scale(1.1);
+    transition: transform 300ms ease;
+  }
+
+  &:hover > * {
+    transform: scale(1);
+  }
 }
 </style>
 
 <style lang="scss">
 .body-text {
+  margin-bottom: 100px;
+
   & p {
     font-size: 1em;
     line-height: 1.8em;
