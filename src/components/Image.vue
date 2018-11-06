@@ -1,18 +1,15 @@
 <template>
-  <div :class="`${contentAware ? 'wrapper' : ''}`">
-    <picture v-if="sizes != null" :class="`${contentAware ? 'child' : ''}`">
-      <source
-        v-for="(size, index) in sizes"
-        :key="index"
-        :media="`(min-width: ${src.sizes[index].width}px)`"
-        :srcset="sizes[index]">
-      <img :src="`${sizes[0]}`" />
-    </picture>
-  </div>
+    <div :class="`${contentAware ? 'wrapper' : '' }`">
+      <img
+        v-if="sizes != null"
+        :src="sizes[0]"
+        :class="`${contentAware ? 'child' : ''}`"
+        :srcset="`${sizes.map((size, index) => `${size} ${src.sizes[index].width}w, `)}`">
+    </div>
 </template>
 
 <script>
-import { firebaseApp as firebase } from '@/firebase.js'
+import app from '@/firebase.js'
 
 export default {
   props: {
@@ -27,12 +24,12 @@ export default {
   },
   methods: {
     getDownloadUrl (src) {
-      var i
-      for (i = 0; i < src.sizes.length; i++) {
-      firebase.storage().ref(`flamelink/media/sized/${src.sizes[i].path}/${src.file}`).getDownloadURL()
-          .then(url => this.sizes.push(url))
-          .catch(err => console.log(err))
-      }
+      // console.log(src)
+      Promise.all(src.sizes.map(size => app.storage.getURL(src.id, { size })))
+        .then(res => {
+          this.sizes = res
+        })
+        .catch(err => console.log(error))
     }
   },
   created () {
@@ -44,6 +41,14 @@ export default {
 <style lang="scss" scoped>
 @import '../scss/variables';
 
+.progressive {
+  width: 100%;
+}
+
+.preview {
+  width: 100%;
+}
+
 div {
   background-color: $blue-primary;
   width: 100%;
@@ -51,17 +56,21 @@ div {
 }
 
 .wrapper {
-  padding-top: 56.25%;
+  overflow: hidden;
+  @include phone {
+    padding-top: 56.25%;
+  }
+  @include tablet {
+    padding-top: 40%;
+  }
+  @include desktop {
+    padding-top: 40%;
+  }
 }
 
-picture {
-
+img {
+  display: block;
   width: 100%;
-
-  & > img {
-    display: block;
-    width: 100%;
-  }
 }
 
 .child {
@@ -70,5 +79,6 @@ picture {
   position: absolute;
   right: 0;
   top: 0;
+  object-fit: cover;
 }
 </style>
