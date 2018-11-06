@@ -3,7 +3,7 @@
   <div class="wrapper">
     <router-link
       class="trigger"
-      v-if="previousEntry != null"
+      v-if="showPrev"
       :to="`/day/${previousEntry}`"
       :style="{
         'background-image':
@@ -24,7 +24,7 @@
 
     <router-link
       class="trigger"
-      v-if="nextEntry != null"
+      v-if="showNext"
       :to="`/day/${nextEntry}`"
       :style="{
           'background-image':
@@ -59,11 +59,13 @@ export default {
   },
   data () {
     return {
+      showPrev: false,
+      showNext: false,
       entries: {},
       entriesImages: [],
       entriesTotal: null,
-      previousEntry: null,
-      nextEntry: null
+      previousEntry: 0,
+      nextEntry: 0
     }
   },
   components: {
@@ -104,16 +106,20 @@ export default {
       let previous = this.active - 1
       if (previous >= 1) {
         this.previousEntry = previous
+        this.showPrev = true
       } else {
-        this.previousEntry = null
+        this.previousEntry = 0
+        this.showPrev = false
       }
     },
     setNext () {
       let next = this.active + 1
       if (next <= this.entriesTotal) {
         this.nextEntry = next
+        this.showNext = true
       } else {
-        this.nextEntry = null
+        this.nextEntry = 0
+        this.showNext = false
       }
     }
   },
@@ -122,8 +128,8 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.setPrev()
-      this.setNext()
+      this.setPrev(this.active)
+      this.setNext(this.active)
     }
   }
 }
@@ -134,6 +140,14 @@ export default {
 
 .wrapper {
   margin-bottom: 64px;
+
+  @include tablet {
+    display: flex;
+  }
+
+  @include desktop {
+    display: flex;
+  }
 }
 
 .trigger {
