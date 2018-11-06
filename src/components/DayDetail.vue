@@ -184,7 +184,13 @@ h2 {
 
 @supports (column-count: 1) {
   .masonry {
-    column-count: 2;
+    @include tablet {
+      column-count: 2;
+    }
+
+    @include desktop {
+      column-count: 2;
+    }
   }
 }
 
