@@ -33,9 +33,9 @@
           </gallery>
 
           <h2>Bilder</h2>
-          
+
           <div class="masonry">
-            
+
             <div
               v-for="(image, imageIndex) in item.gallery"
               :key="imageIndex"
@@ -44,7 +44,7 @@
               @click="galleryIndex = imageIndex">
                 <responsive-image :src="image"/>
             </div>
-          
+
           </div>
 
         </div>
@@ -125,7 +125,7 @@ h1 {
   font-weight: 400;
   margin: 0 16px 0.5em 16px;
   font-size: 1.75em;
-  
+
   @include desktop {
     box-sizing: border-box;
     display: block;
@@ -194,7 +194,7 @@ h2 {
   margin-bottom: 16px;
   overflow: hidden;
   width: 100%;
-  
+
   & > * {
     transform: scale(1.1);
     transition: transform 300ms ease;

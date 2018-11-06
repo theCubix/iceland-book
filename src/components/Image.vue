@@ -29,7 +29,7 @@ export default {
         .then(res => {
           this.sizes = res
         })
-        .catch(err => console.log(error))
+        .catch(err => console.log(err))
     }
   },
   created () {
