@@ -4,18 +4,18 @@
     <router-link
       class="trigger"
       v-if="showPrev"
-      :to="`/day/${previousEntry}`"
+      :to="`/day/${active-1}`"
       :style="{
         'background-image':
         `linear-gradient(to bottom right, rgba(50,243,255,0.75),
         rgba(35,170,178,0.75)),
-        url('${entriesImages[previousEntry - 1][2]}')`
+        url('${objectImages[entries[Object.keys(entries)[active - 2]].coverImage[0].id][2]}')`
       }">
         <div class="justify-wrapper">
           <div class="text-wrapper text-wrapper--previous">
             <span class="secondary-text">Vorheriger Tag</span>
             <span class="primary-text">
-              {{ entries[Object.keys(entries)[previousEntry - 1]].title }}
+              {{ entries[Object.keys(entries)[active - 2]].title }}
             </span>
           </div>
           <left-icon class="icon icon--previous"></left-icon>
@@ -25,18 +25,18 @@
     <router-link
       class="trigger"
       v-if="showNext"
-      :to="`/day/${nextEntry}`"
+      :to="`/day/${active+1}`"
       :style="{
           'background-image':
           `linear-gradient(to bottom right,
           rgba(255,148,50,0.75),
           rgba(178,104,35,0.75)),
-          url('${entriesImages[nextEntry - 1][2]}')`
+          url('${objectImages[entries[Object.keys(entries)[active]].coverImage[0].id][2]}')`
         }">
         <div class="justify-wrapper">
           <div class="text-wrapper text-wrapper--next">
             <span class="secondary-text secondary-text--next">Nächster Tag</span>
-            <span class="primary-text primary-text--next">{{ entries[Object.keys(entries)[nextEntry - 1]].title }}</span>
+            <span class="primary-text primary-text--next">{{ entries[Object.keys(entries)[active]].title }}</span>
           </div>
           <right-icon class="icon icon--next"></right-icon>
         </div>
@@ -63,6 +63,7 @@ export default {
       showNext: false,
       entries: {},
       entriesImages: [],
+      objectImages: {},
       entriesTotal: null,
       previousEntry: 0,
       nextEntry: 0
@@ -98,6 +99,8 @@ export default {
         Promise.all(sizes.map(size => app.storage.getURL(image.id, {size})))
           .then(res => {
             this.entriesImages.push(res)
+            this.objectImages[image.id] = res
+            // console.log(image.id)
           })
           .catch(err => console.log(err))
       })
@@ -105,20 +108,16 @@ export default {
     setPrev () {
       let previous = this.active - 1
       if (previous >= 1) {
-        this.previousEntry = previous
         this.showPrev = true
       } else {
-        this.previousEntry = 0
         this.showPrev = false
       }
     },
     setNext () {
       let next = this.active + 1
       if (next <= this.entriesTotal) {
-        this.nextEntry = next
         this.showNext = true
       } else {
-        this.nextEntry = 0
         this.showNext = false
       }
     }
@@ -128,8 +127,8 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.setPrev(this.active)
-      this.setNext(this.active)
+      this.setPrev()
+      this.setNext()
     }
   }
 }
